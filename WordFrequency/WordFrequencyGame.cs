@@ -29,7 +29,7 @@ namespace WordFrequency
 
                 inputList = list;
 
-                inputList.Sort((w1, w2) => w2.CountedWord - w1.CountedWord);
+                inputList.Sort((wordCount1, wordCount2) => wordCount2.CountedWord - wordCount1.CountedWord);
 
                 var strList = RenderInputList(inputList);
 

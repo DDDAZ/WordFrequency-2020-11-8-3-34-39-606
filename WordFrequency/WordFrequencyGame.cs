@@ -36,7 +36,7 @@ namespace WordFrequency
             List<string> strList = new List<string>();
             foreach (WordCount w in inputList)
             {
-                string s = w.Value + " " + w.CountedWord;
+                string s = w.Render();
                 strList.Add(s);
             }
 

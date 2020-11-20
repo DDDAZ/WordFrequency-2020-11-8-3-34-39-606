@@ -9,32 +9,26 @@ namespace WordFrequency
         public string GetResult(string inputStr)
         {
             var splitedInputsStringArray = Regex.Split(inputStr, @"\s+");
-            if (splitedInputsStringArray.Length == 1)
+
+            var inputList = SplitInputStringWithSpace(inputStr);
+
+            //get the map for the next step of sizing the same word
+            Dictionary<string, List<WordCount>> map = GetListMap(inputList);
+
+            List<WordCount> list = new List<WordCount>();
+            foreach (var entry in map)
             {
-                return inputStr + " 1";
+                WordCount wordCount = new WordCount(entry.Key, entry.Value.Count);
+                list.Add(wordCount);
             }
-            else
-            {
-                var inputList = SplitInputStringWithSpace(inputStr);
 
-                //get the map for the next step of sizing the same word
-                Dictionary<string, List<WordCount>> map = GetListMap(inputList);
+            inputList = list;
 
-                List<WordCount> list = new List<WordCount>();
-                foreach (var entry in map)
-                {
-                    WordCount wordCount = new WordCount(entry.Key, entry.Value.Count);
-                    list.Add(wordCount);
-                }
+            inputList.Sort((wordCount1, wordCount2) => wordCount2.CountedWord - wordCount1.CountedWord);
 
-                inputList = list;
+            var strList = RenderInputList(inputList);
 
-                inputList.Sort((wordCount1, wordCount2) => wordCount2.CountedWord - wordCount1.CountedWord);
-
-                var strList = RenderInputList(inputList);
-
-                return string.Join("\n", strList.ToArray());
-            }
+            return string.Join("\n", strList.ToArray());
         }
 
         private static List<string> RenderInputList(List<WordCount> inputList)
